@@ -56,9 +56,12 @@ button{border:0;border-radius:14px;padding:14px 17px;font-size:15px;font-weight:
           <option value="30">30% de descuento</option>
           <option value="50">50% de descuento</option>
           <option value="70">70% de descuento</option>
+          <option value="second50">50% en la segunda unidad</option>
           <option value="second70">70% en la segunda unidad</option>
+          <option value="second80">80% en la segunda unidad</option>
           <option value="2x1">2 × 1</option>
           <option value="3x2">3 × 2</option>
+          <option value="4x3">4 × 3</option>
         </select>
       </div>
     </div>
@@ -87,13 +90,16 @@ function money(n){return new Intl.NumberFormat("es-AR",{style:"currency",currenc
 function calc(price,qty,type){
   const subtotal=price*qty;
   if(type==="none") return subtotal;
+  if(type==="second50") return price*(qty-Math.floor(qty/2)*0.5);
   if(type==="second70") return price*(qty-Math.floor(qty/2)*0.7);
+  if(type==="second80") return price*(qty-Math.floor(qty/2)*0.8);
   if(type==="2x1") return price*(qty-Math.floor(qty/2));
   if(type==="3x2") return price*(qty-Math.floor(qty/3));
+  if(type==="4x3") return price*(qty-Math.floor(qty/4));
   return subtotal*(1-Number(type)/100);
 }
 function label(type){
- const map={none:"Sin descuento",second70:"70% en 2ª unidad","2x1":"2 × 1","3x2":"3 × 2"};
+ const map={none:"Sin descuento",second50:"50% en 2ª unidad",second70:"70% en 2ª unidad",second80:"80% en 2ª unidad","2x1":"2 × 1","3x2":"3 × 2","4x3":"4 × 3"};
  return map[type]||type+"% de descuento";
 }
 function save(){localStorage.setItem("miPresupuesto",JSON.stringify(state))}
